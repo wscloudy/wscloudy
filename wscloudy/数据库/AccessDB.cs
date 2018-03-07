@@ -18,9 +18,8 @@ namespace CreatsoftPrgram
                 conn = new OleDbConnection(connectStr);
                 conn.Open();
             }
-            catch (Exception ex)
+            catch
             {
-                Log.logger.Error("ACCESS数据库打开失败！", ex);
             }
         }
 
@@ -50,7 +49,7 @@ namespace CreatsoftPrgram
             }
             catch (Exception ex)
             {
-                Log.logger.Error("ACCESS数据库打开失败！", ex);
+                new Exception("ACCESS数据库打开失败！", ex);
             }
         }
 
@@ -78,7 +77,7 @@ namespace CreatsoftPrgram
             }
             catch (Exception ex)
             {
-                Log.logger.Error("ACCESS数据库sql执行失败！", ex);
+                new Exception("ACCESS数据库sql执行失败！", ex);
                 ReOpen();
                 lines = -2;
             }
@@ -116,7 +115,7 @@ namespace CreatsoftPrgram
             }
             catch (Exception ex)
             {
-                Log.logger.Error("ACCESS数据库sql执行失败！", ex);
+                new Exception("ACCESS数据库sql执行失败！", ex);
                 ReOpen();
                 return null;
             }

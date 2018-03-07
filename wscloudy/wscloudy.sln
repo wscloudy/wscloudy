@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wscloudy", "wscloudy.csproj", "{ABF1E9FC-47F4-4F33-954A-9E1ED916EE63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABF1E9FC-47F4-4F33-954A-9E1ED916EE63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF1E9FC-47F4-4F33-954A-9E1ED916EE63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF1E9FC-47F4-4F33-954A-9E1ED916EE63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF1E9FC-47F4-4F33-954A-9E1ED916EE63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CB1BF37-D5FB-4CFA-8745-3AF7F3802C44}
+	EndGlobalSection
+EndGlobal

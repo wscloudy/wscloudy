@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data.SqlClient;
 using System.Data;
-using System.Configuration;
-using System.Collections;
 
-namespace CreatsoftPrgram.MSSQLController
+namespace wscloudy.MSSQLController
 {
     /// <summary>
     /// 
