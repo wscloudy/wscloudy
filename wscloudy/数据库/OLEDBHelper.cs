@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Data.OleDb;
 using System.Data;
+using System.Data.SqlClient;
+using System.Collections.Generic;
 
-namespace wscloudy.MSSQLController
+namespace wscloudy.OLEDBClient
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class SqlDBHelper
+    public class OLEDDBHelper
     {
         /// <summary>
-        /// 数据库连接语句
+        /// 数据库连接字符串
         /// </summary>
         public string ConnectionString
         {
@@ -19,52 +18,87 @@ namespace wscloudy.MSSQLController
         }
 
         /// <summary>
-        /// 
+        /// 可用于手动控制的内置单线程数据库连接
         /// </summary>
-        //public SqlDBHelper()
-        //{
-        //    ConnectionString = ConfigurationManager.ConnectionStrings["pubsConnectionString"].ConnectionString;
-        //}
+        public OleDbConnection Gconn = null;
 
         /// <summary>
-        /// 
+        /// 自动初始化数据库控制
         /// </summary>
-        public SqlDBHelper(string connStr)
+        /// <param name="connect_str">数据库连接字符串</param>
+        public OLEDDBHelper(string connect_str)
         {
-            ConnectionString = connStr;
+            ConnectionString = connect_str;
+            Gconn = new OleDbConnection(ConnectionString);
         }
 
         /// <summary>
-        /// 连接测试
+        /// 手动初始化数据库控制（释放已打开的数据库连接）
         /// </summary>
-        /// <param name="messageStr"></param>
-        /// <returns></returns>
-        public bool ConnectTest(out string messageStr)
+        /// <param name="connect_str">数据库连接字符串</param>
+        public void Init(string connect_str)
         {
-            SqlConnection sqlcnn = new SqlConnection();
-            messageStr = "";
+            if (Gconn != null)
+            {
+                Close();
+                Gconn.Dispose();
+                Gconn = null;
+            }
+            ConnectionString = connect_str;
+            Gconn = new OleDbConnection(ConnectionString);
+        }
+
+        /// <summary>
+        /// 手动关闭单线程数据库连接
+        /// </summary>
+        public void Close()
+        {
             try
             {
-                //ConnectionString = ConfigurationManager.ConnectionStrings["pubsConnectionString"].ConnectionString;
-                sqlcnn.ConnectionString = ConnectionString;
+                if (Gconn.State == ConnectionState.Open)
+                {
+                    Gconn.Close();
+                }
+            }
+            catch { }
+        }
 
-                if (sqlcnn.State != ConnectionState.Open)
-                    sqlcnn.Open();
-
-                if (sqlcnn.State == ConnectionState.Open)
+        /// <summary>
+        /// 手动连接单线程数据库
+        /// </summary>
+        /// <returns>成功-true，失败-false</returns>
+        public bool Open()
+        {
+            try
+            {
+                if (Gconn.State != ConnectionState.Open)
+                {
+                    Gconn.Open();
+                    if (Gconn.State == ConnectionState.Open)
+                        return true;
+                    else
+                        return false;
+                }
+                else
                 {
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                messageStr = ex.Message;
+                return false;
             }
-            finally
-            {
-                sqlcnn.Close();
-            }
-            return false;
+        }
+
+        /// <summary>
+        /// 测试数据库连接是否成功,该操作会进行一次完整的连接和端开。
+        /// </summary>
+        /// <returns>成功返回true，失败返回false</returns>
+        public bool Test()
+        {
+            bool ret = Open();
+            Close();
+            return ret;
         }
 
         /// <summary>
@@ -75,7 +109,7 @@ namespace wscloudy.MSSQLController
         /// <returns>该操作影响的行数</returns>
         public int ExecuteNonQuery(string sql, params IDataParameter[] cmdParms)
         {
-            using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
+            using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
             {
                 SqlCommand sqlcmd = new SqlCommand();
                 try
@@ -99,26 +133,28 @@ namespace wscloudy.MSSQLController
         /// 执行SQL语句,返回IDataReader
         /// </summary>
         /// <param name="sql">SQL语句</param>
-        /// <param name="cmdParms"></param>
-        /// <returns>IDataReader</returns>
-        public IDataReader ExecuteReader(string sql, params IDataParameter[] cmdParms)
+        /// <param name="cmdParms">参数</param>
+        /// <returns>SqlDataReader</returns>
+        public OleDbDataReader ExecuteReader(string sql, params IDataParameter[] cmdParms)
         {
-            SqlConnection sqlcnn = new SqlConnection(ConnectionString);
-            SqlCommand sqlcmd = new SqlCommand();
-            PrepareCommand(sqlcmd, sqlcnn, null, sql, cmdParms);
-            //var trace = DbExecTrace.Start(sqlcmd, cmdParms);
-            SqlDataReader sdr = sqlcmd.ExecuteReader(CommandBehavior.CloseConnection);
-            sqlcmd.Parameters.Clear();
-            //trace.Success("Reader", OperationLogFlags.ExecuteReader);
+            OleDbCommand sqlcmd = new OleDbCommand();
+            PrepareCommand(sqlcmd, Gconn, null, sql, cmdParms);
+            OleDbDataReader sdr = sqlcmd.ExecuteReader(CommandBehavior.CloseConnection);
             return sdr;
         }
 
-        public DataTable ExecuteDataTable(string text, CommandType type, params SqlParameter[] parameters)
+        /// <summary>
+        /// 执行SQL语句，返回数据表
+        /// </summary>
+        /// <param name="text">sql文本</param>
+        /// <param name="parameters">sql参数</param>
+        /// <returns></returns>
+        public DataTable ExecuteDataTable(string text, params OleDbParameter[] parameters)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (OleDbConnection conn = new OleDbConnection(ConnectionString))
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter(conn.CreateCommand()))
+                using (OleDbDataAdapter adapter = new OleDbDataAdapter(conn.CreateCommand()))
                 {
                     conn.Open();
                     adapter.SelectCommand.CommandText = text;
@@ -134,17 +170,35 @@ namespace wscloudy.MSSQLController
         }
 
         /// <summary>
-        /// 执行SQL语句,返回IDataReader
+        /// 执行多条SQL语句，返回各个数据表
         /// </summary>
-        /// <param name="sql">SQL语句</param>
-        /// <param name="cmdParms"></param>
-        /// <returns>IDataReader</returns>
-        //public IDataReader ExecuteProReader(string sql, params IDataParameter[] cmdParms)
-        //{
-        //    sql = ODBHelper.ConvertParameterToSql(sql, cmdParms);
-
-        //    return ExecuteReader(sql);
-        //}
+        /// <param name="text">sql文本数组</param>
+        /// <returns></returns>
+        public DataTable[] ExecuteDataTables(string[] text, string[] name = null)
+        {
+            if (text == null || text.Length == 0) return new DataTable[0];
+            List<DataTable> dts = new List<DataTable>();
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == null || text[i] == "") continue;
+                using (OleDbDataAdapter adapter = new OleDbDataAdapter(Gconn.CreateCommand()))
+                {
+                    DataTable dt = new DataTable();
+                    adapter.SelectCommand.CommandText = text[i];
+                    adapter.Fill(dt);
+                    if (name != null)
+                    {
+                        dt.TableName = name[i];
+                    }
+                    else
+                    {
+                        dt.TableName = "other" + i.ToString();
+                    }
+                    dts.Add(dt);
+                }
+            }
+            return dts.ToArray();
+        }
 
         /// <summary>
         /// 执行SQL，返回结果集中第一行第一列
@@ -154,9 +208,9 @@ namespace wscloudy.MSSQLController
         /// <returns></returns>
         public object ExecuteScalar(string sql, params IDataParameter[] cmdParms)
         {
-            using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
+            using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
             {
-                SqlCommand sqlcmd = new SqlCommand();
+                OleDbCommand sqlcmd = new OleDbCommand();
                 try
                 {
                     PrepareCommand(sqlcmd, sqlcnn, null, sql, cmdParms);
@@ -181,9 +235,9 @@ namespace wscloudy.MSSQLController
         /// <returns></returns>
         public object ExecuteScalar(string sql, CommandType commandType, params IDataParameter[] cmdParms)
         {
-            using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
+            using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
             {
-                SqlCommand sqlcmd = new SqlCommand();
+                OleDbCommand sqlcmd = new OleDbCommand();
                 try
                 {
                     PrepareCommand(sqlcmd, sqlcnn, commandType, sql, cmdParms);
@@ -220,7 +274,7 @@ namespace wscloudy.MSSQLController
         public DataSet GetDataSet(string sql, params IDataParameter[] cmdParms)
         {
             DataSet ds = new DataSet();
-            using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
+            using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
             {
                 SqlCommand sqlcmd = new SqlCommand();
                 try
@@ -249,7 +303,7 @@ namespace wscloudy.MSSQLController
         public DataTable GetDataTable(string sql, params IDataParameter[] cmdParms)
         {
             DataSet ds = new DataSet();
-            using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
+            using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
             {
                 SqlCommand sqlcmd = new SqlCommand();
                 try
@@ -268,148 +322,6 @@ namespace wscloudy.MSSQLController
                 }
             }
         }
-
-        /// <summary>
-        /// 执行多条SQL语句，实现数据库事务。
-        /// </summary>
-        /// <param name="sqlList"></param>
-        /// <returns></returns>
-        //public int ExecuteSqlTran(Hashtable sqlList)
-        //{
-        //    using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
-        //    {
-        //        sqlcnn.Open();
-        //        using (SqlTransaction trans = sqlcnn.BeginTransaction())
-        //        {
-        //            //var trace = DbExecTrace.StartTrans();
-        //            SqlCommand sqlcmd = new SqlCommand();
-        //            try
-        //            {
-        //                var list = new List<Action>();
-        //                //受影响总条数
-        //                int count = 0;
-        //                //循环
-        //                foreach (DictionaryEntry myDE in sqlList)
-        //                {
-        //                    string sql = myDE.Key.ToString();
-        //                    var cmdParms = (IDataParameter[])ConvertParameters((IDataParameter[])myDE.Value);
-        //                    PrepareCommand(sqlcmd, sqlcnn, trans, sql, cmdParms);
-        //                    trace.Trace(sqlcmd, cmdParms);
-        //                    int val = sqlcmd.ExecuteNonQuery();
-        //                    //if (val == 0)
-        //                    //{
-        //                    //    trace.FailTrans();
-        //                    //    trans.Rollback();
-        //                    //    return 0;
-        //                    //}
-        //                    count += val;
-        //                    sqlcmd.Parameters.Clear();
-        //                    trace.Success("trans:" + count, OperationLogFlags.ExecuteNonQuery);
-        //                }
-        //                trans.Commit();
-        //                trace.SuccessTrans();
-        //                list.ForEach(p => p());
-        //                list.Clear();
-        //                return count;
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                trace.FailTrans();
-        //                trans.Rollback();
-        //                throw new Exception(ex.Message);
-        //            }
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// 执行多条SQL语句，实现数据库事务。
-        /// </summary>
-        /// <param name="sqlList"></param>
-        /// <returns></returns>
-        //public int ExecuteSqlTran(IList<ZJNBLH.Business.ODBHelper.CommandInfo> sqlList)
-        //{
-        //    using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
-        //    {
-        //        sqlcnn.Open();
-        //        using (SqlTransaction trans = sqlcnn.BeginTransaction())
-        //        {
-        //            var trace = DbExecTrace.StartTrans();
-        //            SqlCommand sqlcmd = new SqlCommand();
-        //            try
-        //            {
-        //                var list = new List<Action>();
-        //                //受影响总条数
-        //                int count = 0;
-        //                //是否跳过下次操作
-        //                bool Execution = false;
-        //                //循环
-        //                foreach (ZJNBLH.Business.ODBHelper.CommandInfo myDE in sqlList)
-        //                {
-        //                    string sql = myDE.Sql;
-        //                    var cmdParms = (IDataParameter[])ConvertParameters(myDE.Parameters);// (AseParameter[])(IDataParameter[])myDE.Parameters;
-        //                    PrepareCommand(sqlcmd, sqlcnn, trans, sql, cmdParms);
-        //                    int val = 0;//执行Sql返回值
-        //                    if (myDE.State == ZJNBLH.Business.ODBHelper.CommandInfo.StateEnum.Skip)//如果判断为空，则跳过下一次
-        //                    {
-        //                        trace.Trace(sqlcmd, cmdParms);
-        //                        val = (int)sqlcmd.ExecuteScalar();
-        //                        trace.Success("trans:Scalar:r=" + val, OperationLogFlags.ExecuteScalar);
-        //                        if (val == myDE.IsValue)
-        //                            Execution = true;
-        //                    }
-        //                    else if (myDE.State == ZJNBLH.Business.ODBHelper.CommandInfo.StateEnum.Check)//如果判断不为空，则跳过下一次
-        //                    {
-        //                        trace.Trace(sqlcmd, cmdParms);
-        //                        val = Convert.ToInt32(sqlcmd.ExecuteScalar());
-        //                        trace.Success("trans:Scalar:r=" + val, OperationLogFlags.ExecuteScalar);
-        //                        if (val != myDE.IsValue)
-        //                            Execution = true;
-        //                    }
-        //                    else if (myDE.State == ZJNBLH.Business.ODBHelper.CommandInfo.StateEnum.Beyond)//如果没有超出判断值，则跳过下一次
-        //                    {
-        //                        trace.Trace(sqlcmd, cmdParms);
-        //                        val = (int)sqlcmd.ExecuteScalar();
-        //                        trace.Success("trans:Scalar:r=" + val, OperationLogFlags.ExecuteScalar);
-        //                        if (val < myDE.IsValue)
-        //                            Execution = true;
-        //                    }
-        //                    else if (myDE.State == ZJNBLH.Business.ODBHelper.CommandInfo.StateEnum.Normal)
-        //                    {
-        //                        //跳过本次操作
-        //                        if (Execution)
-        //                        {
-        //                            Execution = false;
-        //                            sqlcmd.Parameters.Clear();
-        //                            continue;
-        //                        }
-        //                        trace.Trace(sqlcmd, cmdParms);
-        //                        val = sqlcmd.ExecuteNonQuery();
-        //                        trace.Success("trans:NonQuery:r=" + val, OperationLogFlags.ExecuteNonQuery);
-        //                        //if (val == 0)
-        //                        //{
-        //                        //    trans.Rollback();
-        //                        //    return 0;
-        //                        //}
-        //                        count += val;
-        //                    }
-        //                    sqlcmd.Parameters.Clear();
-        //                }
-        //                trans.Commit();
-        //                trace.SuccessTrans();
-        //                list.ForEach(p => p());
-        //                list.Clear();
-        //                return count;
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                trans.Rollback();
-        //                trace.FailTrans();
-        //                return 0;
-        //            }
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// 拼接Sql
@@ -457,7 +369,7 @@ namespace wscloudy.MSSQLController
         /// <returns>该操作影响的行数</returns>
         public int ExecuteNonQuery(string sql, CommandType commandType, params IDataParameter[] cmdParms)
         {
-            using (SqlConnection sqlcnn = new SqlConnection(ConnectionString))
+            using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
             {
                 SqlCommand sqlcmd = new SqlCommand();
                 try
@@ -530,29 +442,5 @@ namespace wscloudy.MSSQLController
             return sqlParameters;
         }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    //public class SqlDBHelperFactory : IDBHelperFactory
-    //{
-    //    /// <summary>
-    //    /// 创建实体类
-    //    /// </summary>
-    //    /// <returns></returns>
-    //    public IDBHelper CreateHepler()
-    //    {
-    //        return new SqlDBHelper();
-    //    }
-
-    //    /// <summary>
-    //    /// 创建实体类
-    //    /// </summary>
-    //    /// <param name="connStr"></param>
-    //    /// <returns></returns>
-    //    public IDBHelper CreateHepler(string connStr)
-    //    {
-    //        return new SqlDBHelper(connStr);
-    //    }
-    //}
 }
+

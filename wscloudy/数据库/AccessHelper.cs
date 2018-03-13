@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.OleDb;
 
-namespace wscloudy.AccessController
+namespace wscloudy.AccessClient
 {
-    public class AccessDB
+    public class AccessHelper
     {
         private OleDbConnection conn = null;
         private string connectStr;
 
-        public AccessDB(string pathDB)
+        public AccessHelper(string pathDB)
         {
             connectStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + pathDB + "'";
             try

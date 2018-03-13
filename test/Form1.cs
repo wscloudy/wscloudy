@@ -27,7 +27,7 @@ namespace test
         {
             try
             {
-                ActionTimeout.CallWithTimeout(Fun, 1500);
+                ActionTimeout.CallWithTimeout(Fun, 500);
             }
             catch (Exception ex)
             {
