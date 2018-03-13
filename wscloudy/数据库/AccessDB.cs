@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.OleDb;
 
-namespace CreatsoftPrgram
+namespace wscloudy.AccessController
 {
     public class AccessDB
     {
@@ -16,7 +16,6 @@ namespace CreatsoftPrgram
             try
             {
                 conn = new OleDbConnection(connectStr);
-                conn.Open();
             }
             catch
             {

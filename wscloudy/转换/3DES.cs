@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace AlarmTool
+namespace wscloudy.ThreeDES
 {
     /// <summary>
     /// 构造一个对称算法,使用3Des加密
