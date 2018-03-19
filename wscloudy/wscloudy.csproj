@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>wscloudy</RootNamespace>
     <AssemblyName>wscloudy</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,7 +37,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +46,7 @@
     <Compile Include="数据库\OLEDBHelper.cs" />
     <Compile Include="线程\ActionTimeout.cs" />
     <Compile Include="网络\NetHelper.cs" />
+    <Compile Include="网络\NetTools.cs" />
     <Compile Include="转换\3DES.cs" />
     <Compile Include="转换\Compress.cs" />
     <Compile Include="转换\Converts.cs" />

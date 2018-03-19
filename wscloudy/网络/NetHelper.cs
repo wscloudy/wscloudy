@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace Yun.NetClass
+namespace wscloudy.NetSockets
 {
     /// <summary>
     /// 网络连接类型

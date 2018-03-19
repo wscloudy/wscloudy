@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace wscloudy.OLEDBClient
 {
-    public class OLEDDBHelper
+    public class SqlDBHelper
     {
         /// <summary>
         /// 数据库连接字符串
@@ -26,7 +26,7 @@ namespace wscloudy.OLEDBClient
         /// 自动初始化数据库控制
         /// </summary>
         /// <param name="connect_str">数据库连接字符串</param>
-        public OLEDDBHelper(string connect_str)
+        public SqlDBHelper(string connect_str)
         {
             ConnectionString = connect_str;
             Gconn = new OleDbConnection(ConnectionString);
@@ -111,7 +111,7 @@ namespace wscloudy.OLEDBClient
         {
             using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
             {
-                SqlCommand sqlcmd = new SqlCommand();
+                OleDbCommand sqlcmd = new OleDbCommand();
                 try
                 {
                     PrepareCommand(sqlcmd, sqlcnn, null, sql, cmdParms);
@@ -124,6 +124,31 @@ namespace wscloudy.OLEDBClient
                 finally
                 {
                     sqlcmd.Parameters.Clear();
+                    if (sqlcnn.State == ConnectionState.Open) sqlcnn.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 执行SQL语句,返回受影响记录数
+        /// </summary>
+        /// <param name="sql">SQL</param>
+        /// <returns>该操作影响的行数</returns>
+        public int ExecuteNonQuery(string sql)
+        {
+            using (OleDbConnection sqlcnn = new OleDbConnection(ConnectionString))
+            {
+                OleDbCommand sqlcmd = new OleDbCommand();
+                try
+                {
+                    sqlcnn.Open();
+                    sqlcmd.CommandText = sql;
+                    int flag = sqlcmd.ExecuteNonQuery();
+                    sqlcnn.Close();
+                    return flag;
+                }
+                finally
+                {
                     if (sqlcnn.State == ConnectionState.Open) sqlcnn.Close();
                 }
             }
@@ -348,7 +373,7 @@ namespace wscloudy.OLEDBClient
             //填充Sql参数
             if (cmdParms != null)
             {
-                foreach (SqlParameter parameter in ConvertParameters(cmdParms))
+                foreach (OleDbParameter parameter in ConvertParameters(cmdParms))
                 {
                     if ((parameter.Direction == ParameterDirection.InputOutput || parameter.Direction == ParameterDirection.Input) &&
                         (parameter.Value == null))
