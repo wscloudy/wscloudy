@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
+/// <summary>
+/// 数据的常规压缩和解压
+/// </summary>
 namespace wscloudy.Compress
 {
     public class ByteHelper

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Text;
 
+/// <summary>
+/// 网络相关操作和转换的独立工具集
+/// </summary>
 namespace wscloudy.NetTool
 {
     public class NetTools
@@ -48,6 +51,16 @@ namespace wscloudy.NetTool
             {
                 return string.Empty;
             }
+        }
+
+        /// <summary>
+        /// 获取本机ip
+        /// </summary>
+        /// <returns></returns>
+        public static IPAddress[] GetLocalIP()
+        {
+            IPAddress[] IP = Dns.GetHostAddresses(Dns.GetHostName());
+            return IP;
         }
     }
 }

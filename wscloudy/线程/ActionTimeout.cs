@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Threading;
 
+/// <summary>
+/// 线程控制、超时判定等
+/// </summary>
 namespace wscloudy.Threads
 {
+#if !NET_20
     /// <summary>
     /// .net 4.0无参数函数执行超时限制
     /// </summary>
     public class ActionTimeout
     {
-        #region 调用范例
+#region 调用范例
         private static void Example(string[] args)
         {
             CallWithTimeout(FiveSecondMethod, 6000);
@@ -19,6 +23,7 @@ namespace wscloudy.Threads
             Thread.Sleep(5000);
         }
 #endregion
+
         public static void CallWithTimeout(Action action, int timeoutMilliseconds)
         {
             Thread threadToKill = null;
@@ -39,6 +44,7 @@ namespace wscloudy.Threads
             }
         }
     }
+#endif
 
     /// <summary>
     /// 控制函数执行时间,超时返回null不继续执行

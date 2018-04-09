@@ -10,3 +10,4 @@ F:\Work\C#\代码库\test\obj\Debug\test.csproj.GenerateResource.Cache
 F:\Work\C#\代码库\test\obj\Debug\test.csproj.CoreCompileInputs.cache
 F:\Work\C#\代码库\test\obj\Debug\test.exe
 F:\Work\C#\代码库\test\obj\Debug\test.pdb
+F:\Work\C#\代码库\test\obj\Debug\test.ConfigQR.resources

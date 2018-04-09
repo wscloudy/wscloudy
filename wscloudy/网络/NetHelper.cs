@@ -4,6 +4,9 @@ using System.Net;
 using System.Threading;
 using System.Collections.Generic;
 
+/// <summary>
+/// 底层网络接口，暂时只支持UDP
+/// </summary>
 namespace wscloudy.NetSockets
 {
     /// <summary>
@@ -387,7 +390,11 @@ namespace wscloudy.NetSockets
                         {
                             fd.Disconnect(false);
                         }
+#if !NET_20
                         fd.Dispose();
+#else
+                        fd.Close();
+#endif
                         fd = null;
                     }
                 }

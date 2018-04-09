@@ -1,6 +1,6 @@
-﻿using System;
+﻿#if !NET_20
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace wscloudy.Converts
@@ -10,9 +10,9 @@ namespace wscloudy.Converts
     /// </summary>
     public static class ConvertsEx
     {
-        #region 数据转换
+#region 数据转换
 
-        #region 转Int
+#region 转Int
         /// <summary>
         /// 转Int,失败返回0
         /// </summary>
@@ -50,9 +50,9 @@ namespace wscloudy.Converts
             int n;
             return int.TryParse(t, out n);
         }
-        #endregion
+#endregion
 
-        #region 转Int16
+#region 转Int16
         /// <summary>
         /// 转Int,失败返回0
         /// </summary>
@@ -90,9 +90,9 @@ namespace wscloudy.Converts
             Int16 n;
             return Int16.TryParse(t, out n);
         }
-        #endregion
+#endregion
 
-        #region 转byte
+#region 转byte
         /// <summary>
         /// 转byte,失败返回0
         /// </summary>
@@ -130,9 +130,9 @@ namespace wscloudy.Converts
             byte n;
             return byte.TryParse(t, out n);
         }
-        #endregion
+#endregion
 
-        #region 转Long
+#region 转Long
         /// <summary>
         /// 转Long,失败返回0
         /// </summary>
@@ -171,9 +171,9 @@ namespace wscloudy.Converts
             long n;
             return long.TryParse(t, out n);
         }
-        #endregion
+#endregion
 
-        #region 转Double
+#region 转Double
         /// <summary>
         /// 转Int,失败返回0
         /// </summary>
@@ -211,9 +211,9 @@ namespace wscloudy.Converts
             double n;
             return double.TryParse(t, out n);
         }
-        #endregion
+#endregion
 
-        #region 转Decimal
+#region 转Decimal
         /// <summary>
         /// 转Decimal,失败返回0
         /// </summary>
@@ -251,9 +251,9 @@ namespace wscloudy.Converts
             decimal n;
             return decimal.TryParse(t, out n);
         }
-        #endregion
+#endregion
 
-        #region 转DateTime
+#region 转DateTime
         /// <summary>
         /// 转DateTime,失败返回当前时间
         /// </summary>
@@ -321,9 +321,9 @@ namespace wscloudy.Converts
             DateTime n;
             return DateTime.TryParse(t, out n);
         }
-        #endregion
+#endregion
 
-        #region 与int[]相关
+#region 与int[]相关
         /// <summary>
         /// 转int[],字符串以逗号(,)隔开,请确保字符串内容都合法,否则会出错
         /// </summary>
@@ -357,9 +357,9 @@ namespace wscloudy.Converts
         }
 
 
-        #endregion
+#endregion
 
-        #region 过滤字符串的非int,重新组合成字符串
+#region 过滤字符串的非int,重新组合成字符串
         /// <summary>
         /// 过滤字符串的非int,重新组合成字符串
         /// </summary>
@@ -396,9 +396,9 @@ namespace wscloudy.Converts
         {
             return t.ClearNoInt(',');
         }
-        #endregion
+#endregion
 
-        #region 是否可以转换成int[]
+#region 是否可以转换成int[]
         /// <summary>
         /// 是否可以转换成int[],true:是,false:否
         /// </summary>
@@ -431,11 +431,11 @@ namespace wscloudy.Converts
         {
             return t.IsIntArr(',');
         }
-        #endregion
+#endregion
 
-        #endregion
+#endregion
 
-        #region 载取左字符
+#region 载取左字符
         /// <summary>
         /// 载取左字符
         /// </summary>
@@ -488,9 +488,9 @@ namespace wscloudy.Converts
             }
             return t;
         }
-        #endregion
+#endregion
 
-        #region 删除文件名或路径的特殊字符
+#region 删除文件名或路径的特殊字符
 
         private class ClearPathUnsafeList
         {
@@ -511,9 +511,9 @@ namespace wscloudy.Converts
 
             return t;
         }
-        #endregion
+#endregion
 
-        #region 字符串真实长度 如:一个汉字为两个字节
+#region 字符串真实长度 如:一个汉字为两个字节
         /// <summary>
         /// 字符串真实长度 如:一个汉字为两个字节
         /// </summary>
@@ -523,9 +523,9 @@ namespace wscloudy.Converts
         {
             return Encoding.Default.GetBytes(s).Length;
         }
-        #endregion
+#endregion
 
-        #region 去除小数位最后为0的
+#region 去除小数位最后为0的
         /// <summary>
         /// 去除小数位最后为0的
         /// </summary>
@@ -540,9 +540,9 @@ namespace wscloudy.Converts
             }
             return 0;
         }
-        #endregion
+#endregion
 
-        #region 进制转换
+#region 进制转换
 
         /// <summary>
         /// 二进制转十进制
@@ -591,9 +591,9 @@ namespace wscloudy.Converts
 
             return list.ToArray();
         }
-        #endregion
+#endregion
 
-        #region 比较
+#region 比较
         /// <summary>
         /// 判断是否为正确的IP地址，IP范围（0.0.0.0～255.255.255）
         /// </summary>
@@ -654,6 +654,7 @@ namespace wscloudy.Converts
             }
             return 0;
         }
-        #endregion
+#endregion
     }
 }
+#endif

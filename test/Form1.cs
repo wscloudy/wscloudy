@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using wscloudy.Threads;
 using wscloudy.NetTool;
+using wscloudy.Match;
 
 namespace test
 {
@@ -60,6 +61,28 @@ namespace test
         private void button2_Click(object sender, EventArgs e)
         {
             MessageBox.Show(NetTools.GetHostNameByIp("172.16.20.63"));
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(NetTools.GetLocalIP()[0].ToString()); 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            new ConfigQR().Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (IsMatch.IsIPv4("127.0.0.1"))
+            {
+                MessageBox.Show("符合");
+            }
+            else
+            {
+                MessageBox.Show("不符合");
+            }
         }
     }
 }

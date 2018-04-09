@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 
+/// <summary>
+/// 各种转换
+/// </summary>
 namespace wscloudy.Converts
 {
     public class Converts

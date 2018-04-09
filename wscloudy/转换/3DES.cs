@@ -4,6 +4,9 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 
+/// <summary>
+/// 差分加密
+/// </summary>
 namespace wscloudy.ThreeDES
 {
     /// <summary>

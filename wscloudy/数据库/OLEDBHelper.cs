@@ -4,6 +4,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 
+/// <summary>
+/// OLEDB数据库基础类
+/// </summary>
 namespace wscloudy.OLEDBClient
 {
     public class SqlDBHelper
