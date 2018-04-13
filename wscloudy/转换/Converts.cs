@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -168,6 +169,22 @@ namespace wscloudy.Converts
             Array.Copy(srcArray2, 0, newArray, srcArray1.Length, srcArray2.Length);
 
             return newArray;
+        }
+
+        /// <summary>
+        /// 获取（如结构体）中的各个成员名
+        /// </summary>
+        /// <param name="obj">需要分析的数据类型</param>
+        /// <returns></returns>
+        public static List<string> GetSubNames(Type t)
+        {
+            List<string> names = new List<string>();
+            FieldInfo[] pp = t.GetFields();
+            foreach (FieldInfo p in pp)
+            {
+                names.Add(p.Name);
+            }
+            return names;
         }
     }
 }

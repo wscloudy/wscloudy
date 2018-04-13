@@ -13,6 +13,11 @@ using wscloudy.Match;
 
 namespace test
 {
+    struct Ts
+    {
+        public string sss;
+        public int ggfg;
+    }
     public partial class Form1 : Form
     {
         public Form1()
@@ -82,6 +87,15 @@ namespace test
             else
             {
                 MessageBox.Show("不符合");
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            List<string> names = wscloudy.Converts.Converts.GetSubNames(typeof(Ts));
+            foreach(string name in names)
+            {
+                MessageBox.Show(name);
             }
         }
     }
