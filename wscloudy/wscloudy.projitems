@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2b8b24b7-0141-469e-b685-f4f78f674126</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>wscloudy</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\BarcodeFormat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\BaseLuminanceSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\Binarizer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\BinaryBitmap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\BitmapLuminanceSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\BitArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\BitMatrix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\BitSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\DecoderResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\DefaultGridSampler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\DetectorResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\detector\MathUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\GlobalHistogramBinarizer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\GridSampler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\HybridBinarizer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\PerspectiveTransform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\reedsolomon\GenericGF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\reedsolomon\GenericGFPoly.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\reedsolomon\ReedSolomonDecoder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\reedsolomon\ReedSolomonEncoder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\common\StringUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\DecodeHintType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\EncodeHintType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\LuminanceSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\BitMatrixParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\DataBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\DataMask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\DecodedBitStreamParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\Decoder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\ErrorCorrectionLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\FormatInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\Mode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\QRCodeDecoderMetaData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\decoder\Version.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\detector\AlignmentPattern.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\detector\AlignmentPatternFinder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\detector\Detector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\detector\FinderPattern.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\detector\FinderPatternFinder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\detector\FinderPatternInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\encoder\BlockPair.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\encoder\ByteMatrix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\encoder\Encoder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\encoder\MaskUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\encoder\MatrixUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\encoder\QRCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\qrcode\QRCodeReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\Result.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\ResultMetadataType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\ResultPoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\ResultPointCallback.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\3rd\zxing\WriterException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\QR\PrintQRCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)二维码\QR\ScanQRCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)数据库\AccessHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)数据库\MSSQLHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)数据库\OLEDBHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)文件\OpenIni.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)日志\ILogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)日志\Log.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)日志\Logger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)日志\LoggerManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)线程\ActionTimeout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)网络\NetHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)网络\NetTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)转换\3DES.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)转换\Compress.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)转换\Converts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)转换\ConvertsEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)转换\IsMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)预定义.cs" />
+  </ItemGroup>
+</Project>
