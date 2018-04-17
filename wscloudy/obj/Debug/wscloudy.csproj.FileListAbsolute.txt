@@ -1,6 +1,0 @@
-F:\Work\C#\代码库\wscloudy\bin\Debug\wscloudy.dll
-F:\Work\C#\代码库\wscloudy\bin\Debug\wscloudy.pdb
-F:\Work\C#\代码库\wscloudy\obj\Debug\wscloudy.csproj.CoreCompileInputs.cache
-F:\Work\C#\代码库\wscloudy\obj\Debug\wscloudy.dll
-F:\Work\C#\代码库\wscloudy\obj\Debug\wscloudy.pdb
-F:\Work\C#\代码库\wscloudy\obj\Debug\wscloudy.csprojResolveAssemblyReference.cache
