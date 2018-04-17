@@ -14,6 +14,9 @@ namespace wscloudy.NetSockets
     /// </summary>
     public enum NetType
     {
+        /// <summary>
+        /// 暂时不可用
+        /// </summary>
         TCP,
         UDP
     }
@@ -260,7 +263,7 @@ namespace wscloudy.NetSockets
                     sendBuff = null;
                     break;
                 case NetType.TCP:
-                    log.Message = "连接中，请等待";
+                    log.Message = "TCP连接中";
                     Trace(this, log);
                     if (fd != null && fd.Connected == true)
                     {
@@ -282,7 +285,7 @@ namespace wscloudy.NetSockets
                         }
                         else
                         {
-                            log.Message = "TCP发送失败！";
+                            log.Message = "TCP连接失败！";
                             Trace(this, log);
                         }
                     }

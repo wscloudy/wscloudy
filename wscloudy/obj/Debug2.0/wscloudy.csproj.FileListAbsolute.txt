@@ -1,0 +1,6 @@
+F:\Work\C#\代码库\wscloudy\bin\Debug2.0\wscloudy.dll
+F:\Work\C#\代码库\wscloudy\bin\Debug2.0\wscloudy.pdb
+F:\Work\C#\代码库\wscloudy\obj\Debug2.0\wscloudy.csprojResolveAssemblyReference.cache
+F:\Work\C#\代码库\wscloudy\obj\Debug2.0\wscloudy.csproj.CoreCompileInputs.cache
+F:\Work\C#\代码库\wscloudy\obj\Debug2.0\wscloudy.dll
+F:\Work\C#\代码库\wscloudy\obj\Debug2.0\wscloudy.pdb

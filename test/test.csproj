@@ -86,11 +86,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\wscloudy\wscloudy.csproj">
-      <Project>{abf1e9fc-47f4-4f33-954a-9e1ed916ee63}</Project>
-      <Name>wscloudy</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
